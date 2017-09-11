@@ -112,6 +112,60 @@ namespace aruco {
     }
 
 
+        void CvDrawingUtils::draw3dCube(cv::Mat &Image, cv::Mat& box_pos, cv::Mat& box_ori, cv::Mat& tvec, cv::Mat& rvec, float size, const CameraParameters &CP)
+    {
+        Mat objectPoints (8,3,CV_32FC1);
+        double halfSize=size/2;
+        objectPoints.at<float>(0,0)=-halfSize;
+        objectPoints.at<float>(0,1)=0;
+        objectPoints.at<float>(0,2)=-halfSize;
+        objectPoints.at<float>(1,0)=halfSize;
+        objectPoints.at<float>(1,1)=0;
+        objectPoints.at<float>(1,2)=-halfSize;
+        objectPoints.at<float>(2,0)=halfSize;
+        objectPoints.at<float>(2,1)=0;
+        objectPoints.at<float>(2,2)=halfSize;
+        objectPoints.at<float>(3,0)=-halfSize;
+        objectPoints.at<float>(3,1)=0;
+        objectPoints.at<float>(3,2)=halfSize;
+
+        objectPoints.at<float>(4,0)=-halfSize;
+        objectPoints.at<float>(4,1)=size;
+        objectPoints.at<float>(4,2)=-halfSize;
+        objectPoints.at<float>(5,0)=halfSize;
+        objectPoints.at<float>(5,1)=size;
+        objectPoints.at<float>(5,2)=-halfSize;
+        objectPoints.at<float>(6,0)=halfSize;
+        objectPoints.at<float>(6,1)=size;
+        objectPoints.at<float>(6,2)=halfSize;
+        objectPoints.at<float>(7,0)=-halfSize;
+        objectPoints.at<float>(7,1)=size;
+        objectPoints.at<float>(7,2)=halfSize;
+
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 3; j++){
+                objectPoints.at<float>(i,j) += box_pos.at<float>(j);
+            }
+        }
+
+
+
+        vector<Point2f> imagePoints;
+        projectPoints( objectPoints, rvec, tvec,  CP.CameraMatrix,CP.Distorsion,   imagePoints);
+        //draw lines of different colours
+        for (int i=0;i<4;i++)
+            cv::line(Image,imagePoints[i],imagePoints[(i+1)%4],Scalar(0,0,255,255),1,CV_AA);
+
+        for (int i=0;i<4;i++)
+            cv::line(Image,imagePoints[i+4],imagePoints[4+(i+1)%4],Scalar(0,0,255,255),1,CV_AA);
+
+        for (int i=0;i<4;i++)
+            cv::line(Image,imagePoints[i],imagePoints[i+4],Scalar(0,0,255,255),1,CV_AA);
+
+    }
+
+
+
     /****
  *
  *
