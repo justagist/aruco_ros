@@ -130,17 +130,23 @@ namespace aruco {
         objectPoints.at<float>(3,2)=halfSize;
 
         objectPoints.at<float>(4,0)=-halfSize;
-        objectPoints.at<float>(4,1)=size;
+        objectPoints.at<float>(4,1)=-size;
         objectPoints.at<float>(4,2)=-halfSize;
         objectPoints.at<float>(5,0)=halfSize;
-        objectPoints.at<float>(5,1)=size;
+        objectPoints.at<float>(5,1)=-size;
         objectPoints.at<float>(5,2)=-halfSize;
         objectPoints.at<float>(6,0)=halfSize;
-        objectPoints.at<float>(6,1)=size;
+        objectPoints.at<float>(6,1)=-size;
         objectPoints.at<float>(6,2)=halfSize;
         objectPoints.at<float>(7,0)=-halfSize;
-        objectPoints.at<float>(7,1)=size;
+        objectPoints.at<float>(7,1)=-size;
         objectPoints.at<float>(7,2)=halfSize;
+
+
+        objectPoints = box_ori*objectPoints.t();
+
+        objectPoints = objectPoints.t();
+
 
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 3; j++){
