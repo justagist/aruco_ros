@@ -45,8 +45,8 @@ namespace aruco
     
     static void draw3dCube(cv::Mat &Image,Board &m,const CameraParameters &CP);
 
-    static void draw3dCube(cv::Mat &Image, cv::Mat& box_pos, cv::Mat& box_ori, cv::Mat& tvec, cv::Mat& rvec, float size, const CameraParameters &CP);
-
+    static void draw3dCube(cv::Mat &Image, cv::Mat& box_pos, cv::Mat& box_ori, cv::Mat& tvec, cv::Mat& rvec, float size, const CameraParameters &CP, cv::Scalar color);
+    static void draw3dSquare(cv::Mat &Image, cv::Mat& box_pos, cv::Mat& box_ori, cv::Mat& tvec, cv::Mat& rvec, float size, const CameraParameters &CP, cv::Scalar color);
   };
 };
 
